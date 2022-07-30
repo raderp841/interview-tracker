@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion'
+import { MatIconModule } from '@angular/material/icon'
 import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
@@ -16,6 +17,8 @@ import { UserComponent } from './user/user.component';
 import { PostComponent } from './post/post.component';
 import { SubpostComponent } from './subpost/subpost.component';
 import { NoteComponent } from './note/note.component';
+import { PostListComponent } from './post-list/post-list.component';
+import { NewPostComponent } from './new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { NoteComponent } from './note/note.component';
     UserComponent,
     PostComponent,
     SubpostComponent,
-    NoteComponent
+    NoteComponent,
+    PostListComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,8 @@ import { NoteComponent } from './note/note.component';
     MatCardModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
 
   ],
   providers: [],
