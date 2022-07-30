@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -9,12 +11,27 @@ import { UserService } from '../services/user.service';
 export class HeaderComponent implements OnInit {
 
 
-  constructor(public userService : UserService) { }
+  userSub : Subscription | undefined;
+  user : User | undefined;
+  constructor(public userService: UserService){}
 
   ngOnInit(): void {
+
+    this.userSub = this.userService
+      .getUserUpdateListener()
+      .subscribe((user: User) => {
+        this.user = user;
+      });
+    // this.postService.getPosts();
+
   }
 
-  handleLoginRegisterClick = () => {
+  handleLoginRegisterClick = (isLoggedIn : boolean) => {
+    if(isLoggedIn){
+      this.userService.logoutUser();
+      return;
+    }
+
     this.userService.addUser('im_a_user');
   }
 }

@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
   <span>Interview Tracker</span>
   <span class="flex-expand"></span>
-  <span><button (click)="handleLoginRegisterClick()" mat-button>Login / Register</button></span>
+  <span><button (click)="handleLoginRegisterClick(!!user)" mat-button>{{user ? 'Logout' : 'Login / Register'}}</button></span>
 </mat-toolbar>

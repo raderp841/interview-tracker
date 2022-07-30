@@ -8,10 +8,9 @@ import { User } from '../models/user.model'
   providedIn: 'root'
 })
 export class UserService {
-
   private userUpdated = new Subject<User>()
   constructor(private http: HttpClient){}
-  private user : User | undefined;
+  private user : any;
 
 
   getUser(user_name: string) {
@@ -38,5 +37,10 @@ export class UserService {
         this.user = user;
         this.userUpdated.next({...user});
       });
+  }
+
+  logoutUser() {
+    this.user = undefined
+    this.userUpdated.next(this.user);
   }
 }
