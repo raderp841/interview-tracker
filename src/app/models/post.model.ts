@@ -1,7 +1,8 @@
 import { Note } from "./note.model";
 
 export interface Post {
-  id: string | null;
+  id: Object | null;
+  // user_id: Object | null;
   title: string;
   content: string;
   subposts: Post[] | null;

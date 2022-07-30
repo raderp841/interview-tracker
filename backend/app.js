@@ -3,10 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const Post = require('./models/post');
+const User = require('./models/user');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://sourceallies:QmXqrvZT1cF0j7b3@trackerdata.pgqoq.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://sourceallies:QmXqrvZT1cF0j7b3@trackerdata.pgqoq.mongodb.net/sadb?retryWrites=true&w=majority')
   .then(() => {
     console.log('Connected to db');
   })
@@ -35,6 +36,8 @@ app.post('/api/posts/new', (req, res, next) => {
   });
 
   post.save()
+    .then(console.log)
+    .catch(console.log);
 
   res.status(201).json({
     message: 'post added successfully'
@@ -52,5 +55,26 @@ app.get('/api/posts',(req, res, next) => {
     .catch(console.log);
 
 });
+
+app.get('/api/user', (req, res, next) => {
+  User.find().$where('user_name').equals(req.query.user_name)
+    .then(console.log)
+    .catch(console.log);
+});
+
+app.post('/api/user', (req, res, next) => {
+  //should check if username taken
+  const user = new User({
+    user_name: req.body.user_name
+  });
+
+  user.save()
+    .then(console.log)
+    .catch(console.log);
+
+  res.status(201).json({
+    message: 'user created successfully'
+  });
+})
 
 module.exports = app;
