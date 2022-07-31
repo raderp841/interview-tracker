@@ -53,12 +53,16 @@ app.get('/api/posts',(req, res, next) => {
       });
     })
     .catch(console.log);
-
 });
 
 app.get('/api/user', (req, res, next) => {
-  User.find().$where('user_name').equals(req.query.user_name)
-    .then(console.log)
+  User.findOne({'user_name': req.query.user_name})
+    .then(documents => {
+      res.status(200).json({
+        message: 'successfully retrieved user',
+        user: documents
+      })
+    })
     .catch(console.log);
 });
 
@@ -70,7 +74,9 @@ app.post('/api/user', (req, res, next) => {
 
   user.save()
     .then(console.log)
-    .catch(console.log);
+    .catch(err => {
+      console.log(err);
+    });
 
   res.status(201).json({
     message: 'user created successfully'

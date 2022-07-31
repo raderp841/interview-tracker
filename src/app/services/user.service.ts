@@ -13,12 +13,17 @@ export class UserService {
   private user : any;
 
 
-  async getUser(user_name: string) {
+  getUser(user_name: string) {
     const params = {user_name};
     this.http.get<{message: string, user: User}>(`http://localhost:3000/api/user?${new URLSearchParams(params).toString()}`)
       .subscribe((userData) => {
+        console.log(userData.message);
+        console.log(userData.user);
         this.user = userData.user;
-        this.userUpdated.next({...this.user});
+        let userSpoof : User = userData.user;
+        console.log(this.user);
+        this.userUpdated.next(this.user);
+        console.log('i updated the user');
       });
   }
 
@@ -28,7 +33,7 @@ export class UserService {
 
   addUser(user_name : string){
     const user : User = {
-      id: null,
+      _id: null,
       user_name
     }
 
@@ -36,7 +41,7 @@ export class UserService {
       .subscribe((userData) => {
         console.log(userData.message);
         this.user = user;
-        this.userUpdated.next({...user});
+        this.userUpdated.next({...this.user});
       });
   }
 

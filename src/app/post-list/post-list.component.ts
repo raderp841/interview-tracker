@@ -23,8 +23,9 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.userSub = this.userService
       .getUserUpdateListener()
       .subscribe((user: User) => {
+        console.log("post-list component: " + user)
         this.user = user;
-      })
+      });
 
     this.postsSub = this.postService
       .getPostUpdateListener()
@@ -36,6 +37,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.postsSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 
 }

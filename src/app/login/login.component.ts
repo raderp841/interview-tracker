@@ -20,6 +20,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.userSub = this.userService
       .getUserUpdateListener()
       .subscribe((user : User) => {
+        if(!!user){
+          this.router.navigate(['/home']);
+        }else{
+          console.log('login error');
+        }
         this.user = user;
       });
   }
@@ -37,16 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }else{
       //attmpt to login
-      this.userService.getUser(userForm.value.username.trim())
-        .then(() => {
-          console.log('done getting user');
-          if(!!this.user){
-            this.router.navigate(['/home']);
-          }else{
-            console.log('username already taken');
-          }
-          return;
-        });
+      this.userService.getUser(userForm.value.username.trim());
     }
   }
 

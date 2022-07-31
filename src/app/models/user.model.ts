@@ -1,5 +1,5 @@
 
 export interface User {
-  id: Object | null;
+  _id: string | null;
   user_name: string;
 }
