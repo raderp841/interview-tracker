@@ -1,5 +1,19 @@
 <mat-toolbar color="primary">
   <span>Interview Tracker</span>
   <span class="flex-expand"></span>
-  <span><button (click)="handleLoginRegisterClick(!!user)" mat-button>{{user ? 'Logout' : 'Login / Register'}}</button></span>
+  <span>
+    <button
+      *ngIf="router.url !== '/auth'"
+      (click)="handleLoginRegisterClick(!!user)"
+      mat-button>
+        {{user ? 'Logout' : 'Login / Register'}}
+    </button>
+    <button
+      *ngIf="router.url === '/auth'"
+      (click)="goHome()"
+      mat-button>
+        Home
+    </button>
+
+  </span>
 </mat-toolbar>

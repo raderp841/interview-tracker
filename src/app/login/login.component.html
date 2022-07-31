@@ -1,1 +1,22 @@
-<p>login works!</p>
+<mat-card>
+  <form  #userForm="ngForm" (submit)="handleUserForm(userForm, isRegistration)" >
+    <mat-form-field>
+      <input matInput type="text" name="username" ngModel required #username="ngModel" placeholder="Username">
+      <mat-error *ngIf="username.invalid">Please enter a valid username</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-action-row>
+      <button mat-raised-button color="primary" type="submit">{{ isRegistration ? 'Register' : 'Login' }}</button>
+      &nbsp;
+      <button mat-raised-button color="accent" type="button" (click)="handleCancelClick()">Cancel</button>
+    </mat-action-row>
+  </form>
+  <br>
+  <button
+    mat-button
+    color="primary"
+    type="button"
+    (click)="handleLoginRegisterFlip()">
+      {{ isRegistration ? 'Im already a user.' : 'I need to register' }}
+  </button>
+</mat-card>

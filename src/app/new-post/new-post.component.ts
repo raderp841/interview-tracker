@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { User } from '../models/user.model';
 import { PostsService } from '../services/posts.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-new-post',
@@ -10,13 +13,25 @@ import { PostsService } from '../services/posts.service';
 export class NewPostComponent implements OnInit {
   newClicked = false;
 
+  user : User | undefined;
+  private userSub: Subscription | undefined;
+
   ngOnInit(): void {
+    this.userSub = this.userService
+    .getUserUpdateListener()
+    .subscribe((user: User) => {
+      this.user = user;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSub?.unsubscribe();
   }
 
   handleNewClick = () => this.newClicked = true;
   handleCancelClick = () => this.newClicked = false;
 
-  constructor(public postsService: PostsService){};
+  constructor(public postsService: PostsService, private userService: UserService){};
 
   onAddPost(form: NgForm){
     if(form.invalid) return;

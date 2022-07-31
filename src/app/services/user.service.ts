@@ -13,8 +13,9 @@ export class UserService {
   private user : any;
 
 
-  getUser(user_name: string) {
-    this.http.get<{message: string, user: User}>(`http://localhost:3000/api/user?${new URLSearchParams(user_name)}`)
+  async getUser(user_name: string) {
+    const params = {user_name};
+    this.http.get<{message: string, user: User}>(`http://localhost:3000/api/user?${new URLSearchParams(params).toString()}`)
       .subscribe((userData) => {
         this.user = userData.user;
         this.userUpdated.next({...this.user});

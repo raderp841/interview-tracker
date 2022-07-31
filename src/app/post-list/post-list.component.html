@@ -1,13 +1,37 @@
-<mat-accordion *ngIf="posts.length > 0">
-  <mat-expansion-panel *ngFor="let post of posts">
-    <mat-expansion-panel-header>
-      {{post.title}}
-    </mat-expansion-panel-header>
-    <p>{{post.content}}</p>
-    <mat-action-row>
-      <button color="primary" mat-button>EDIT</button>
-      <button color="warn" mat-button>DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-<p class="info-text mat-body-1" *ngIf="posts.length <= 0">No posts yet</p>
+<div *ngIf="!!user">
+  <mat-accordion *ngIf="posts.length > 0">
+    <mat-expansion-panel *ngFor="let post of posts">
+      <app-post></app-post>
+      <mat-expansion-panel-header>
+        {{post.title}}
+      </mat-expansion-panel-header>
+      <p>{{post.content}}</p>
+      <mat-action-row>
+        <button color="primary" mat-button>EDIT</button>
+        <button color="warn" mat-button>DELETE</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <p class="info-text mat-body-1" *ngIf="posts.length <= 0">No posts yet</p>
+</div>
+<div *ngIf="!user">
+  <h1 class="info-text">Welcome to Interview Tracker</h1>
+  <hr>
+  <h3>Purpose</h3>
+  <p class="mat-body-1">
+    The purpose of this application is to provide an easy way to keep track of interviews.
+  </p>
+  <hr>
+  <h3>Built with</h3>
+  <p class="mat-body-1">
+    This application was built with the MEAN stack. <br>
+  </p>
+  <mat-list role="list">
+    <mat-list-item role="listitem"><b>M</b>ongoDB</mat-list-item>
+    <mat-list-item role="listitem"><b>E</b>xpress</mat-list-item>
+    <mat-list-item role="listitem"><b>A</b>ngular</mat-list-item>
+    <mat-list-item role="listitem"><b>N</b>ode</mat-list-item>
+  </mat-list>
+  <hr>
+  <p class="info-text mat-body-1">Please login or register</p>
+</div>

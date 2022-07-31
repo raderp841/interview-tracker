@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
   userSub : Subscription | undefined;
   user : User | undefined;
-  constructor(public userService: UserService){}
+  constructor(private userService: UserService, public router: Router){}
 
   ngOnInit(): void {
 
@@ -32,6 +33,9 @@ export class HeaderComponent implements OnInit {
       return;
     }
 
-    this.userService.addUser('im_a_user');
+    this.router.navigate(['/auth']);
+    // this.userService.addUser('im_a_user');
   }
+
+  goHome = () =>  this.router.navigate(['/home']);
 }
