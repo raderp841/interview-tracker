@@ -1,4 +1,4 @@
-<div *ngIf="!!user">
+<div *ngIf="user">
   <button *ngIf="!newClicked" (click)="handleNewClick()" class="fixed-button" color="primary" mat-raised-button>NEW</button>
   <mat-card>
     <form  #postForm="ngForm" (submit)="onAddPost(postForm)" *ngIf="newClicked">

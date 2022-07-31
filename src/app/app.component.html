@@ -1,4 +1,8 @@
 <app-header></app-header>
 <main>
-  <router-outlet></router-outlet>
+  <app-login *ngIf="isLogin"></app-login>
+  <div *ngIf="!isLogin">
+    <app-new-post></app-new-post>
+    <app-post-list></app-post-list>
+  </div>
 </main>

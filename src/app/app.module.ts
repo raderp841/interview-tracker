@@ -21,14 +21,6 @@ import { SubpostComponent } from './subpost/subpost.component';
 import { NoteComponent } from './note/note.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { NewPostComponent } from './new-post/new-post.component';
-import { HomeComponent } from './home/home.component';
-import { AuthComponent } from './auth/auth.component';
-
-const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'auth', component: AuthComponent }
-];
 
 @NgModule({
   declarations: [
@@ -41,8 +33,6 @@ const routes: Routes = [
     NoteComponent,
     PostListComponent,
     NewPostComponent,
-    HomeComponent,
-    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +46,6 @@ const routes: Routes = [
     HttpClientModule,
     MatIconModule,
     MatListModule,
-    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

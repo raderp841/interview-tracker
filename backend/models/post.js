@@ -6,7 +6,7 @@ const postSchema = mongoose.Schema({
   parentPost: {type : String, required: false},
   createdDate: {type : Date, required: true, default: new Date()},
   dueDate: {type : Date, required: true, default: new Date()},
-
+  user_id: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Post', postSchema);

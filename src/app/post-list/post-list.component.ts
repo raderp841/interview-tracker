@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { PostsService } from '../services/posts.service';
+import { RoutingService } from '../services/routing.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -14,18 +15,28 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   posts : Post[] = [];
   user : User | undefined;
+  showPosts : boolean = false;
   private postsSub: Subscription | undefined;
   private userSub : Subscription | undefined;
-  constructor(private postService: PostsService, private userService: UserService) { }
+  private showPostsSub : Subscription | undefined;
+  constructor(
+    private postService: PostsService,
+    private userService: UserService,
+    private routingService: RoutingService) { }
 
   ngOnInit(): void {
 
     this.userSub = this.userService
-      .getUserUpdateListener()
-      .subscribe((user: User) => {
-        console.log("post-list component: " + user)
-        this.user = user;
-      });
+    .getUserUpdateListener()
+    .subscribe((user: User) => {
+      this.user = user;
+    });
+
+    this.showPostsSub = this.routingService
+      .getIsShowPostsListener()
+      .subscribe((showPosts : boolean) => {
+        this.showPosts = showPosts;
+      })
 
     this.postsSub = this.postService
       .getPostUpdateListener()
@@ -38,6 +49,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.postsSub?.unsubscribe();
     this.userSub?.unsubscribe();
+    this.showPostsSub?.unsubscribe();
   }
 
 }

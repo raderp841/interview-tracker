@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 app.post('/api/posts/new', (req, res, next) => {
   const post = new Post({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    user_id: req.body.user_id
   });
 
   post.save()

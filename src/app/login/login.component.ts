@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
+import { RoutingService } from '../services/routing.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -14,14 +14,23 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   user : User | undefined;
   userSub : Subscription | undefined;
+  isLogin : boolean = false;
+  isLoginSub : Subscription | undefined;
   isRegistration = true;
-  constructor(private userService: UserService, private router: Router){}
+
+  constructor(private userService: UserService, private routingService: RoutingService){}
   ngOnInit(): void {
+    this.isLoginSub = this.routingService
+      .getIsLoginListener()
+      .subscribe((isLogin : boolean) => {
+        this.isLogin = isLogin;
+      })
+
     this.userSub = this.userService
       .getUserUpdateListener()
       .subscribe((user : User) => {
         if(!!user){
-          this.router.navigate(['/home']);
+          this.routingService.switchToHome();
         }else{
           console.log('login error');
         }
@@ -31,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSub?.unsubscribe();
+    this.isLoginSub?.unsubscribe();
   }
 
   handleUserForm = (userForm: NgForm, isRegistration: boolean) => {
@@ -38,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if(isRegistration){
       //check if username already exists
       this.userService.addUser(userForm.value.username.trim());
-      this.router.navigate(['/home']);
+      this.routingService.switchToHome();
       return;
     }else{
       //attmpt to login
@@ -51,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   handleCancelClick = () => {
-    this.router.navigate(['/home']);
+    this.routingService.switchToHome();
   }
 
 }

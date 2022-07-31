@@ -3,13 +3,13 @@
   <span class="flex-expand"></span>
   <span>
     <button
-      *ngIf="router.url !== '/auth'"
+      *ngIf="!isLogin"
       (click)="handleLoginRegisterClick(!!user)"
       mat-button>
         {{user ? 'Logout' : 'Login / Register'}}
     </button>
     <button
-      *ngIf="router.url === '/auth'"
+      *ngIf="isLogin"
       (click)="goHome()"
       mat-button>
         Home
