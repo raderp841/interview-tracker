@@ -3,6 +3,7 @@
     <mat-form-field>
       <input matInput type="text" name="username" ngModel required #username="ngModel" placeholder="Username">
       <mat-error *ngIf="username.invalid">Please enter a valid username</mat-error>
+      <mat-hint *ngIf="userTaken">Username not available <br></mat-hint>
     </mat-form-field>
     <br>
     <mat-action-row>

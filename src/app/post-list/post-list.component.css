@@ -1,3 +1,7 @@
 .info-text {
   text-align: center;
 }
+
+.flex-expand {
+  flex: 1 1 auto;
+}

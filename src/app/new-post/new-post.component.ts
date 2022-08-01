@@ -19,12 +19,7 @@ export class NewPostComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.userSub = this.userService
     .getUserUpdateListener()
-    .subscribe((user: User) => {
-      console.log("new-post user: " + user)
-      this.user = user;
-      console.log("new-post user2: " + this.user);
-      console.log("user exits: " + !!this.user);
-    });
+    .subscribe((user: User) => this.user = user);
   }
 
   ngOnDestroy(): void {

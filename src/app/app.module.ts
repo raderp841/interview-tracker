@@ -10,15 +10,10 @@ import { MatExpansionModule } from '@angular/material/expansion'
 import { MatListModule } from '@angular/material/list'
 import { MatIconModule } from '@angular/material/icon'
 import { HttpClientModule } from '@angular/common/http'
-import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
-import { UserComponent } from './user/user.component';
-import { PostComponent } from './post/post.component';
-import { SubpostComponent } from './subpost/subpost.component';
-import { NoteComponent } from './note/note.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { NewPostComponent } from './new-post/new-post.component';
 
@@ -27,10 +22,6 @@ import { NewPostComponent } from './new-post/new-post.component';
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    UserComponent,
-    PostComponent,
-    SubpostComponent,
-    NoteComponent,
     PostListComponent,
     NewPostComponent,
   ],

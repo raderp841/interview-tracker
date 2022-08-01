@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { environment } from '../..//environments/environment';
 import { Post } from '../models/post.model';
 import { UserService } from './user.service';
+
+const BACKEND_URL = environment.apiUrl + 'posts/'
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +20,20 @@ export class PostsService {
   private posts : Post[] = [];
 
   getPosts() {
-    this.http.get<{message: string, posts: Post[]}>('http://localhost:3000/api/posts')
+    const user_id : string | undefined = this.userService.getCurrentUserId();
+    if(user_id == undefined) return;
+    const params = {user_id};
+    this.http.get<{message: string, posts: Post[]}>(BACKEND_URL + '?' + new URLSearchParams(params))
       .subscribe((postData) => {
         this.posts = postData.posts;
+        this.postsUpdated.next([...this.posts]);
+      });
+  }
+
+  deletePost(post_id: string) {
+    this.http.post<{message: string}>(BACKEND_URL + 'delete', {post_id})
+      .subscribe((responseData) => {
+        this.posts = this.posts.filter(p => p._id != post_id);
         this.postsUpdated.next([...this.posts]);
       });
   }
@@ -29,9 +43,8 @@ export class PostsService {
   }
 
   addPost(title: string, content: string){
-    console.log(this.userService.getCurrentUserId());
     const post: Post = {
-      id: null,
+      _id: null,
       title,
       content,
       subposts: null,
@@ -42,10 +55,9 @@ export class PostsService {
       user_id: this.userService.getCurrentUserId()
     };
 
-    this.http.post<{message: string}>('http://localhost:3000/api/posts/new', post)
+    this.http.post<{post: Post, message: string}>(BACKEND_URL + 'new', post)
       .subscribe((responseData) => {
-        console.log(responseData.message);
-        this.posts.push(post);
+        this.posts.push(responseData.post);
         this.postsUpdated.next([...this.posts]);
       });
   }

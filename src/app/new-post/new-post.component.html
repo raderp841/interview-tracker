@@ -1,7 +1,8 @@
 <div *ngIf="user">
-  <button *ngIf="!newClicked" (click)="handleNewClick()" class="fixed-button" color="primary" mat-raised-button>NEW</button>
-  <mat-card>
-    <form  #postForm="ngForm" (submit)="onAddPost(postForm)" *ngIf="newClicked">
+  <button *ngIf="!newClicked" (click)="handleNewClick()" class="fixed-button" color="primary" mat-fab>NEW</button>
+  <br><br><br>
+  <mat-card *ngIf="newClicked">
+    <form  #postForm="ngForm" (submit)="onAddPost(postForm)">
       <mat-form-field>
         <input matInput type="text" name="title" ngModel required #title="ngModel" placeholder="Post Title">
         <mat-error *ngIf="title.invalid">Please enter a post title</mat-error>

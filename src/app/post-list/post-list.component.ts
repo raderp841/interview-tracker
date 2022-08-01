@@ -24,25 +24,25 @@ export class PostListComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private routingService: RoutingService) { }
 
+  deletePost(postId : string | null) {
+    if(postId == null) return;
+    this.postService.deletePost(postId)
+  }
+
   ngOnInit(): void {
 
     this.userSub = this.userService
-    .getUserUpdateListener()
-    .subscribe((user: User) => {
-      this.user = user;
-    });
+      .getUserUpdateListener()
+      .subscribe((user: User) => this.user = user);
 
     this.showPostsSub = this.routingService
       .getIsShowPostsListener()
-      .subscribe((showPosts : boolean) => {
-        this.showPosts = showPosts;
-      })
+      .subscribe((showPosts : boolean) => this.showPosts = showPosts);
 
     this.postsSub = this.postService
       .getPostUpdateListener()
-      .subscribe((posts: Post[]) => {
-        this.posts = posts;
-      });
+      .subscribe((posts: Post[]) => this.posts = posts);
+
     this.postService.getPosts();
   }
 
@@ -51,5 +51,4 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.userSub?.unsubscribe();
     this.showPostsSub?.unsubscribe();
   }
-
 }

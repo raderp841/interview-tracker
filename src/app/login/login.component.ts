@@ -14,9 +14,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   user : User | undefined;
   userSub : Subscription | undefined;
+  userTakenSub : Subscription | undefined;
   isLogin : boolean = false;
   isLoginSub : Subscription | undefined;
   isRegistration = true;
+  userTaken = false;
 
   constructor(private userService: UserService, private routingService: RoutingService){}
   ngOnInit(): void {
@@ -31,24 +33,25 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((user : User) => {
         if(!!user){
           this.routingService.switchToHome();
-        }else{
-          console.log('login error');
         }
         this.user = user;
       });
+
+    this.userTakenSub = this.userService
+      .getUserTakenSubListener()
+      .subscribe((userTaken : boolean) => this.userTaken = userTaken);
   }
 
   ngOnDestroy(): void {
     this.userSub?.unsubscribe();
     this.isLoginSub?.unsubscribe();
+    this.userTaken = false;
   }
 
   handleUserForm = (userForm: NgForm, isRegistration: boolean) => {
     if(userForm.invalid) return;
     if(isRegistration){
-      //check if username already exists
       this.userService.addUser(userForm.value.username.trim());
-      this.routingService.switchToHome();
       return;
     }else{
       //attmpt to login
